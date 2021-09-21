@@ -1,5 +1,9 @@
 # Just Monorepo
 
+Bare minimum boilerplate featuring Webpack, Babel, basic EJS templating and PostCSS styling, all live-reloadable. Code linting and formatting are provided by ESLint and Prettier.
+
+Please see [SPECS](SPECS.md) for project sample business area and processes.
+
 ## Usage
 
 Clone this repository:
