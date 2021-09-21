@@ -5,6 +5,13 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "build:client": "npm run build --prefix packages/client",
+    "build:server": "npm run build --prefix packages/server",
+    "build:types": "npm run build --prefix packages/types",
+    "build:utils": "npm run build --prefix packages/utils",
+    "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils"
+  },
   "devDependencies": {
     "typescript": "^4.4.3"
   }

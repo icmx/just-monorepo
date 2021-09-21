@@ -11,5 +11,13 @@
     "type": "git",
     "url": "git+https://github.com/icmx/just-monorepo.git",
     "directory": "packages/server"
-  }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js"
 }
