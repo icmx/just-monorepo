@@ -1,0 +1,15 @@
+{
+  "name": "@just-monorepo/utils",
+  "version": "0.0.0",
+  "author": "icmx",
+  "license": "MIT",
+  "homepage": "https://github.com/icmx/just-monorepo#readme",
+  "bugs": {
+    "url": "https://github.com/icmx/just-monorepo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icmx/just-monorepo.git",
+    "directory": "packages/utils"
+  }
+}
