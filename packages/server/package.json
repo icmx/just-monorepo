@@ -13,11 +13,23 @@
     "directory": "packages/server"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "node-dev --notify=false src/index.ts",
+    "start": "node ."
   },
   "files": [
     "dist"
   ],
   "types": "dist/index.d.ts",
-  "main": "dist/index.js"
+  "main": "dist/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "node-dev": "^7.0.0",
+    "ts-node": "^10.2.1"
+  }
 }

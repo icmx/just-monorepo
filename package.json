@@ -10,7 +10,9 @@
     "build:server": "npm run build --prefix packages/server",
     "build:types": "npm run build --prefix packages/types",
     "build:utils": "npm run build --prefix packages/utils",
-    "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils"
+    "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+    "watch:server": "npm run watch --prefix packages/server",
+    "start:server": "npm run start --prefix packages/server"
   },
   "devDependencies": {
     "typescript": "^4.4.3"
