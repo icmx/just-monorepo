@@ -7,3 +7,8 @@ export type LoaderComponentProps = {
 export type PreviewComponentProps = {
   order: OrderDto;
 };
+
+export type ResultComponentProps = {
+  result: boolean;
+  onClose: () => void;
+};

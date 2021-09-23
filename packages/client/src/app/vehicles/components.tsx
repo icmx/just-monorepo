@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { VehicleDto } from '@just-monorepo/types';
+import { OrderDto, VehicleDto } from '@just-monorepo/types';
 
 import { createVehiclesApi } from './api';
 import { VEHICLES_API, vehicleIcons, vehicleModelNames } from './constants';
@@ -12,6 +12,7 @@ export const Vehicle = ({
   onChange,
 }: VehicleComponentProps) => (
   <button
+    type="button"
     className={`vehicle ${isSelected && 'is-selected'}`}
     onClick={() => onChange({ vehicleId: vehicle.id })}
   >
@@ -38,12 +39,18 @@ export const Vehicles = ({ onChange, onLoading }: VehiclesComponentProps) => {
     });
   };
 
+  const handleChange = (change: Partial<OrderDto>) => {
+    onChange(change);
+
+    setSelectedVehicleId(change.vehicleId);
+  };
+
   useEffect(() => findAllVehicles(), []);
 
   return (
     <>
       <header>
-        <h1>Rent a car {selectedVehicleId}</h1>
+        <h1>Rent a car</h1>
         <div>
           <button type="button" value="refresh" onClick={findAllVehicles}>
             🔄
@@ -57,7 +64,7 @@ export const Vehicles = ({ onChange, onLoading }: VehiclesComponentProps) => {
               key={vehicle.id}
               vehicle={vehicle}
               isSelected={vehicle.id === selectedVehicleId}
-              onChange={onChange}
+              onChange={handleChange}
             />
           ))}
       </section>
