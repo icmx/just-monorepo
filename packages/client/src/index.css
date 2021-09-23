@@ -1,0 +1,46 @@
+:root {
+  --font-size: 1rem;
+  --font-family: 'system-ui', sans-serif;
+
+  --color-text: #333333;
+  --color-back: #f1f1f1;
+
+  --palette-black-100: #000000cc;
+  --palette-black-200: #00000022;
+  --palette-black-300: #00000011;
+}
+
+body {
+  max-width: 45rem;
+  margin: 2.5rem auto;
+  padding: 0 2.5rem;
+
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+
+  line-height: 1.5;
+
+  color: var(--palette-black-100);
+  background-color: var(--palette-black-300);
+}
+
+h1 {
+  line-height: 1.2;
+}
+
+img {
+  width: 8rem;
+  height: 8rem;
+
+  display: block;
+  margin-bottom: 2.5rem;
+}
+
+hr {
+  margin: 2.5rem 0;
+
+  border: none;
+
+  height: 1px;
+  background-color: var(--palette-black-200);
+}
