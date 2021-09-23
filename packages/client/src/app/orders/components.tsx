@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { OrderDto } from '../../../../types/dist';
+
+import { OrderDto } from '@just-monorepo/types';
+
+import { Vehicles } from '../vehicles';
 
 import { LoaderComponentProps, PreviewComponentProps } from './types';
 
@@ -20,7 +23,7 @@ export const Preview = ({ order }: PreviewComponentProps) => {
 };
 
 export const Order = () => {
-  const [order, setOrders] = useState<OrderDto>(null);
+  const [order, setOrder] = useState<OrderDto>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
@@ -28,6 +31,12 @@ export const Order = () => {
       Car Renting Service
       <Loader isLoading={isLoading} />
       <Preview order={order} />
+      <Vehicles
+        onChange={(change: Partial<OrderDto>) =>
+          setOrder({ ...order, ...change })
+        }
+        onLoading={(isLoading: boolean) => setIsLoading(isLoading)}
+      />
     </>
   );
 };
