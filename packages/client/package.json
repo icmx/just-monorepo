@@ -22,10 +22,12 @@
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "dependencies": {
+    "@just-monorepo/utils": "0.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@just-monorepo/types": "0.0.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "clean-webpack-plugin": "^4.0.0",
