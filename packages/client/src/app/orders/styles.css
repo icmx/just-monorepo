@@ -1,0 +1,60 @@
+.loader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 2rem;
+  transform: scale(0);
+  opacity: 0;
+  border-radius: var(--border-radius-circle);
+
+  background-color: var(--palette-black-100);
+  backdrop-filter: blur(0.125rem);
+
+  transition-duration: 0.15s;
+  transition-property: border-radius, font-size, opacity, transform;
+}
+
+.loader.is-shown {
+  transform: scale(1);
+  opacity: 1;
+  border-radius: 0;
+}
+
+.loader > .loader-icon {
+  animation: flip 1s linear infinite;
+}
+
+@keyframes flip {
+  50% {
+    transform: rotateY(180deg);
+  }
+}
+
+.result {
+  position: fixed;
+
+  box-shadow: 0 2px 8px 0px var(--palette-black-200);
+
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: bottom;
+
+  transition-duration: 0.15s;
+  transition-property: opacity, transform;
+}
+
+.result.is-shown {
+  transform: scale(1);
+  opacity: 1;
+}

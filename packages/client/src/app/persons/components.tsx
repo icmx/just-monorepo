@@ -4,8 +4,8 @@ import { PersonComponentProps } from './types';
 
 export const Person = ({ onChange }: PersonComponentProps) => {
   return (
-    <>
-      <div>
+    <section className="card flex is-column">
+      <div className="field">
         <label htmlFor="full-name">Full Name</label>
         <input
           type="text"
@@ -18,7 +18,7 @@ export const Person = ({ onChange }: PersonComponentProps) => {
           }}
         />
       </div>
-      <div>
+      <div className="field">
         <label htmlFor="contacts">Contact information</label>
         <textarea
           id="contacts"
@@ -31,6 +31,6 @@ export const Person = ({ onChange }: PersonComponentProps) => {
           }}
         ></textarea>
       </div>
-    </>
+    </section>
   );
 };

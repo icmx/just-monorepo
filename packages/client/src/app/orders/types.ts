@@ -6,6 +6,7 @@ export type LoaderComponentProps = {
 
 export type PreviewComponentProps = {
   order: OrderDto;
+  isValid: boolean;
 };
 
 export type ResultComponentProps = {

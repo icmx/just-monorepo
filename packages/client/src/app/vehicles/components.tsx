@@ -6,6 +6,8 @@ import { createVehiclesApi } from './api';
 import { VEHICLES_API, vehicleIcons, vehicleModelNames } from './constants';
 import { VehicleComponentProps, VehiclesComponentProps } from './types';
 
+import './styles.css';
+
 export const Vehicle = ({
   vehicle,
   isSelected,
@@ -13,7 +15,7 @@ export const Vehicle = ({
 }: VehicleComponentProps) => (
   <button
     type="button"
-    className={`vehicle ${isSelected && 'is-selected'}`}
+    className={`vehicle ${isSelected && 'is-selected'} card flex is-column`}
     onClick={() => onChange({ vehicleId: vehicle.id })}
   >
     <div className="vehicle-icon">{vehicleIcons.get(vehicle.model)}</div>
@@ -27,16 +29,19 @@ export const Vehicle = ({
 
 export const Vehicles = ({ onChange, onLoading }: VehiclesComponentProps) => {
   const api = createVehiclesApi(VEHICLES_API);
+
   const [vehicles, setVehicles] = useState<VehicleDto[]>(null);
   const [selectedVehicleId, setSelectedVehicleId] = useState<number>(null);
 
   const findAllVehicles = () => {
     onLoading(true);
 
-    api.findAllVehicles().then((response) => {
-      setVehicles(response);
-      onLoading(false);
-    });
+    api
+      .findAllVehicles()
+      .then((response) => {
+        setVehicles(response);
+      })
+      .finally(() => onLoading(false));
   };
 
   const handleChange = (change: Partial<OrderDto>) => {
@@ -45,19 +50,24 @@ export const Vehicles = ({ onChange, onLoading }: VehiclesComponentProps) => {
     setSelectedVehicleId(change.vehicleId);
   };
 
-  useEffect(() => findAllVehicles(), []);
+  useEffect(findAllVehicles, []);
 
   return (
     <>
-      <header>
+      <header className="flex is-sides">
         <h1>Rent a car</h1>
         <div>
-          <button type="button" value="refresh" onClick={findAllVehicles}>
+          <button
+            className="button is-small"
+            type="button"
+            value="refresh"
+            onClick={findAllVehicles}
+          >
             🔄
           </button>
         </div>
       </header>
-      <section className="vehicles">
+      <section className="vehicles flex">
         {vehicles &&
           vehicles.map((vehicle) => (
             <Vehicle
