@@ -21,7 +21,7 @@ export const Vehicle = ({
     <div className="vehicle-icon">{vehicleIcons.get(vehicle.model)}</div>
     <div className="vehicle-data">
       {vehicleModelNames.get(vehicle.model)} from{' '}
-      <strong>{vehicle.price.toFixed(2)}</strong>₽
+      <strong>{vehicle.price}¤</strong>
     </div>
     <div className="vehicle-data">⭐ {vehicle.rating.toFixed(1)}</div>
   </button>
