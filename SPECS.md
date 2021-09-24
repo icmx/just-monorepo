@@ -2,9 +2,9 @@
 
 > *This document briefly describes sample project business area along with its processes to analyze and design correct solution architecture.*
 
-There are *vehicles* (cars) which can be rented by *persons* (application users). Cars are separated by
+There are *vehicles* (cars) which can be rented by *persons* (application users). Cars are separated by:
 
-  - Model (it can be only Economy, Confort or Business)
+  - Model (it can be only Economy, Confort or Business model)
   - Price (150-300 Currency Units for Economy, 300-1000 CUs for Comfort and 1000-3000 for Business)
   - Rating (from 0.0 to 5.0 stars)
 
