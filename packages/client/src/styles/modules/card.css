@@ -1,0 +1,11 @@
+.card {
+  background-color: var(--palette-white-100);
+  border-radius: 1rem;
+  padding: 1rem;
+
+  border-bottom: solid 1px var(--palette-black-200);
+}
+
+.card.is-selected {
+  background-color: var(--palette-yellow-100);
+}

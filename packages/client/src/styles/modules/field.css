@@ -1,0 +1,22 @@
+.field > label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.field > input,
+.field > textarea {
+  display: block;
+  width: 100%;
+
+  border: solid 1px var(--palette-black-200);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+.field > textarea {
+  resize: vertical;
+}

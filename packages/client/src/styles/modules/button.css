@@ -1,0 +1,30 @@
+.button {
+  border: none;
+  outline: none;
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+
+  display: block;
+  width: 100%;
+
+  border-radius: 1rem;
+  padding: 1rem;
+
+  font-size: 1.2rem;
+  border-bottom: solid 1px var(--palette-black-200) !important;
+
+  background-color: var(--palette-yellow-100);
+
+  cursor: pointer;
+}
+
+.button.is-small {
+  background-color: var(--palette-white-100);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: var(--palette-yellow-200);
+}
