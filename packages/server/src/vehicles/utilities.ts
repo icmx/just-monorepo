@@ -22,4 +22,4 @@ export const mockVehicle = (): VehicleDto => {
 };
 
 export const mockVehicles = (): VehicleDto[] =>
-  times.repeat<VehicleDto>(mockVehicle, random.int(3, 6)).sort(sortVehicles);
+  times.repeat<VehicleDto>(mockVehicle, random.int(3, 5)).sort(sortVehicles);

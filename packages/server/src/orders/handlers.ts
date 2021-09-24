@@ -8,7 +8,7 @@ export const createOrder = async (request: Request, response: Response) => {
 
   console.log(`Trying to create an order: ${JSON.stringify(order)}`);
 
-  await times.delay(2000);
+  await times.delay(1000);
 
   if (validate.isValidOrder(order)) {
     response.sendStatus(200);
