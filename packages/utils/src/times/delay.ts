@@ -1,7 +1,6 @@
 /**
  * Creates a delay promise before some action.
  * @param ms - Delay value in milliseconds.
- * @returns
  * @example
  * delay(2000).then(() => console.log('Read this after 2 seconds!'));
  */

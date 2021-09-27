@@ -10,7 +10,6 @@ import { isFullString } from './is-full-string';
  *   - Has a `fullName` property which is valid non-empty string
  *   - Has a `contacts` property which is valid non-empty string
  * @param order
- * @returns
  */
 export const isValidOrder = ({ vehicleId, fullName, contacts }: OrderDto) =>
   isInteger(vehicleId) && isFullString(fullName) && isFullString(contacts);

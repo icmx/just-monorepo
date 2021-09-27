@@ -3,7 +3,6 @@
  * (inclusive) and `max` (inclusive)
  * @param min
  * @param max
- * @returns
  */
 export const float = (min: number, max: number) =>
   Math.random() * (max - min) + min;

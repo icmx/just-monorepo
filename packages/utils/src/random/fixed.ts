@@ -6,7 +6,6 @@ import { float } from './float';
  * @param min
  * @param max
  * @param fractionDigits - Number of digits after the decimal point
- * @returns
  * @example
  * fixed(1, 5, 2); // -> 1.12
  * fixed(1, 5, 2); // -> 2.04
