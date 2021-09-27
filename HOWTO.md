@@ -456,3 +456,110 @@ While developing it can be started in non-production watch mode:
 ```sh
 npm run watch:server
 ```
+
+## Client Sub-Package
+
+**`@just-monorepo/client`** is client package. It's an example of front-end application for end users and will be built with React and Webpack.
+
+To preapare client first install React packages:
+
+```sh
+npm install react react-dom
+```
+
+Then install development dependencies. Types comes first:
+
+```sh
+npm install --save-dev @types/react @types/react-dom
+```
+
+Then Webpack along with its plugins and other extras:
+
+```sh
+npm install --save-dev clean-webpack-plugin copy-webpack-plugin css-loader file-loader html-webpack-plugin mini-css-extract-plugin postcss-csso postcss-import postcss-loader ts-loader webpack webpack-cli webpack-dev-server webpack-merge
+```
+
+Like with server package, setup local dependencies manually by modifying client `package.json`:
+
+```diff
+@@ -22,10 +22,12 @@
+    "types": "dist/index.d.ts",
+    "main": "dist/index.js",
+    "dependencies": {
++     "@just-monorepo/utils": "0.0.0",
+      "react": "...",
+      "react-dom": "..."
+    },
+    "devDependencies": {
++     "@just-monorepo/types": "0.0.0",
+      "@types/react": "...",
+      "@types/react-dom": "...",
+      "clean-webpack-plugin": "...",
+```
+
+And link them:
+
+```sh
+npm install
+```
+
+Setup Webpack next. Like e.g. TypeScript its configuration should be splitten into base and local with specific paths (for sub-package). They are available here:
+
+  - Base Webpack configuration: [`/webpack.config.js`](webpack.config.js)
+  - Local Webpack configuration: [`/packages/client/webpack.config.js`](packages/client/webpack.config.js)
+
+Due to React typed JSX (TSX files) integration `tsconfig.json` should now have `jsx` option along with new TSX entry point (`"src/index.tsx"`):
+
+```diff
+@@ -3,7 +3,8 @@
+    "compilerOptions": {
+      "baseUrl": ".",
+      "rootDir": "src",
+-     "outDir": "dist"
++     "outDir": "dist",
++     "jsx": "react"
+    },
+-   "files": ["src/index.ts"]
++   "files": ["src/index.tsx"]
+  }
+```
+
+Next setup build and watch scripts. First comes client's `package.json`:
+
+```diff
+@@ -13,7 +13,8 @@
+      "directory": "packages/client"
+    },
+    "scripts": {
+-     "build": "tsc"
++     "build": "webpack --config-name build",
++     "watch": "webpack serve --config-name watch"
+    },
+    "files": [
+      "dist"
+```
+
+Then in global one:
+
+```diff
+@@ -12,6 +12,7 @@
+      "build:utils": "npm run build --prefix packages/utils",
+      "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+      "watch:server": "npm run watch --prefix packages/server",
++     "watch:client": "npm run watch --prefix packages/client",
+      "start:server": "npm run start --prefix packages/server"
+    },
+    "devDependencies": {
+```
+
+And client sub-package is set up and ready. It can be built by `build` command:
+
+```sh
+npm run build:client
+```
+
+While developing it can be started in non-production watch mode:
+
+```sh
+npm run watch:client
+```
