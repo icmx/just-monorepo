@@ -364,14 +364,14 @@ Setup watch and serve scripts in `package.json` of `@just-monorepo/server` packa
 -   "main": "dist/index.js"
 +   "main": "dist/index.js",
 +   "dependencies": {
-+     "cors": "^2.8.5",
-+     "express": "^4.17.1"
++     "cors":  "...",
++     "express":  "..."
 +   },
 +   "devDependencies": {
-+     "@types/cors": "^2.8.12",
-+     "@types/express": "^4.17.13",
-+     "node-dev": "^7.0.0",
-+     "ts-node": "^10.2.1"
++     "@types/cors":  "...",
++     "@types/express":  "...",
++     "node-dev":  "...",
++     "ts-node":  "..."
 +   }
   }
 ```
@@ -398,14 +398,14 @@ Now add local types and utilities sub-packages as dependencies, like in section 
     "main": "dist/index.js",
     "dependencies": {
 +     "@just-monorepo/utils": "0.0.0",
-      "cors": "^2.8.5",
-      "express": "^4.17.1"
+      "cors": "...",
+      "express":  "..."
     },
     "devDependencies": {
 +     "@just-monorepo/types": "0.0.0",
-      "@types/cors": "^2.8.12",
-      "@types/express": "^4.17.13",
-      "node-dev": "^7.0.0",
+      "@types/cors":  "...",
+      "@types/express":  "...",
+      "node-dev":  "...",
 ```
 
 Then link them by running `install` from root directory:
@@ -439,7 +439,7 @@ One small ts-node caveat: to use sub-package dependencies enable this setting in
   }
 ```
 
-Now server is set up and ready. It can be build by `build` command:
+Now server is set up and ready. It can be built by `build` command:
 
 ```sh
 npm run build:server
