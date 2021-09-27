@@ -457,7 +457,7 @@ While developing it can be started in non-production watch mode:
 npm run watch:server
 ```
 
-## Client Sub-Package
+### Client Sub-Package
 
 **`@just-monorepo/client`** is client package. It's an example of front-end application for end users and will be built with React and Webpack.
 
@@ -563,3 +563,22 @@ While developing it can be started in non-production watch mode:
 ```sh
 npm run watch:client
 ```
+
+### Documentation (Optional)
+
+Integrated documentation to TypeScript code can be easily added by using JSDoc syntax ([see more](https://jsdoc.app/)). Just add special entry to annotate a code block, i.e. in `@just-monorepo/utils` code, `validate/is-valid-order.ts`:
+
+```ts
+/**
+ * Returns true if Order is valid, i.e:
+ *
+ *   - Has a `vehicleId` property which is valid integer number
+ *   - Has a `fullName` property which is valid non-empty string
+ *   - Has a `contacts` property which is valid non-empty string
+ * @param order
+ */
+export const isValidOrder = ({ vehicleId, fullName, contacts }: OrderDto) =>
+  isInteger(vehicleId) && isFullString(fullName) && isFullString(contacts);
+```
+
+After `build` command this annotation will available in external packages, i.e. in `@just-monorepo/server` which utilizes `@just-monorepo/utils`.
