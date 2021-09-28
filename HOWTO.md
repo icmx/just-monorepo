@@ -410,7 +410,7 @@ And for root `package.json` too:
       "cors": "^2.8.5",
 ```
 
-Setup Webpack next. Like e.g. TypeScript its configuration should be split into base and local ones with specific paths (for sub-package). They are available here:
+Setup Webpack configuration next. Like e.g. TypeScript its configuration should be split into base and local ones with specific paths (for sub-package). They are available here:
 
   - [`/webpack.config.js`](webpack.config.js) — base Webpack configuration
   - [`/packages/client/webpack.config.js`](packages/client/webpack.config.js) — local (per package) Webpack configuration
