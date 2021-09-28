@@ -630,3 +630,80 @@ export const isValidOrder = (order: OrderDto): boolean =>
 ```
 
 After `build` command this annotation will be available in external packages, i.e. in `@just-monorepo/server` which utilizes `@just-monorepo/utils`.
+
+## Linting (Optional)
+
+Linting can be added with ESLint project packages along with TypeScript integration. Install them as development dependencies:
+
+```sh
+npm i --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+```
+
+Then add splitted configuration:
+
+  - [`/.eslintrc.js`](.eslintrc.js) — base ESLint configuration
+  - Configuration for each sub-package:
+    - [`/packages/client/.eslintrc.js`](packages/client/.eslintrc.js)
+    - [`/packages/server/.eslintrc.js`](packages/server/.eslintrc.js)
+    - [`/packages/types/.eslintrc.js`](packages/types/.eslintrc.js)
+    - [`/packages/utils/.eslintrc.js`](packages/utils/.eslintrc.js)
+
+Note the client sub-package configuration: since it uses React and JSX it should have this option:
+
+```diff
+@@ -1,3 +1,8 @@
+  module.exports = {
+    extends: '../../.eslintrc.js',
++   parserOptions: {
++     ecmaFeatures: {
++       jsx: true,
++     },
++   },
+  };
+```
+
+Next add linting script option in each of sub-packages `package.json`:
+
+```diff
+@@ -13,7 +13,8 @@
+      "directory": "packages/utils"
+    },
+    "scripts": {
+-     "build": "tsc"
++     "build": "tsc",
++     "lint": "eslint src"
+    },
+    "files": [
+       "dist"
+```
+
+It's just a `"lint": "eslint src"` in each package. For root `package.json` it should be added too:
+
+```diff
+@@ -13,7 +13,12 @@
+      "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+      "watch:server": "npm run watch --prefix packages/server",
+      "watch:client": "npm run watch --prefix packages/client",
+-     "start:server": "npm run start --prefix packages/server"
++     "start:server": "npm run start --prefix packages/server",
++     "lint:client": "npm run lint --prefix packages/client",
++     "lint:server": "npm run lint --prefix packages/server",
++     "lint:types": "npm run lint --prefix packages/types",
++     "lint:utils": "npm run lint --prefix packages/utils",
++     "lint": "npm run lint:client && npm run lint:server && npm run lint:types && npm run lint:utils"
+    },
+    "devDependencies": {
+      "@types/cors": "...",
+```
+
+Now linting can be started for any specific project by `npm run lint:<package>`, for instance:
+
+```sh
+npm run lint:client
+```
+
+Or for all packages at once:
+
+```sh
+npm run lint
+```

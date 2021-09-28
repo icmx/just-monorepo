@@ -3,7 +3,7 @@ import { random, times } from '@just-monorepo/utils';
 
 import { modelsOrder, modelsPrices } from './constants';
 
-export const sortVehicles = (first: VehicleDto, second: VehicleDto) =>
+export const sortVehicles = (first: VehicleDto, second: VehicleDto): number =>
   modelsOrder.get(first.model) - modelsOrder.get(second.model);
 
 export const mockVehicle = (): VehicleDto => {

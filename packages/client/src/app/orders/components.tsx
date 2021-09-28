@@ -16,13 +16,16 @@ import {
 
 import './styles.css';
 
-export const Loader = ({ isLoading }: LoaderComponentProps) => (
+export const Loader = ({ isLoading }: LoaderComponentProps): JSX.Element => (
   <aside className={`loader ${isLoading ? 'is-shown' : ''}`}>
     <div className="loader-icon">⌛</div>
   </aside>
 );
 
-export const Preview = ({ order, isValid }: PreviewComponentProps) => (
+export const Preview = ({
+  order,
+  isValid,
+}: PreviewComponentProps): JSX.Element => (
   <section className="card flex is-column">
     <p>Following data will be sent:</p>
     <pre>{JSON.stringify(order, null, 2)}</pre>
@@ -32,7 +35,10 @@ export const Preview = ({ order, isValid }: PreviewComponentProps) => (
   </section>
 );
 
-export const Result = ({ result, onClose }: ResultComponentProps) => (
+export const Result = ({
+  result,
+  onClose,
+}: ResultComponentProps): JSX.Element => (
   <section className={`result card ${result === undefined ? '' : 'is-shown'}`}>
     <h1>{result ? 'Great!' : 'Uh-oh...'}</h1>
     <p>
@@ -46,7 +52,7 @@ export const Result = ({ result, onClose }: ResultComponentProps) => (
   </section>
 );
 
-export const Order = () => {
+export const Order = (): JSX.Element => {
   const api = createOrdersApi(ORDERS_API);
 
   const [order, setOrder] = useState<OrderDto>(null);
@@ -68,10 +74,7 @@ export const Order = () => {
 
     api
       .createOrder(order)
-      .then(
-        (result) => setResult(result),
-        () => setResult(false)
-      )
+      .then((result) => setResult(result))
       .finally(() => setIsLoading(false));
   };
 

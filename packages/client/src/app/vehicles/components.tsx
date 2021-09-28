@@ -12,7 +12,7 @@ export const Vehicle = ({
   vehicle,
   isSelected,
   onChange,
-}: VehicleComponentProps) => (
+}: VehicleComponentProps): JSX.Element => (
   <button
     type="button"
     className={`vehicle ${isSelected && 'is-selected'} card flex is-column`}
@@ -27,7 +27,10 @@ export const Vehicle = ({
   </button>
 );
 
-export const Vehicles = ({ onChange, onLoading }: VehiclesComponentProps) => {
+export const Vehicles = ({
+  onChange,
+  onLoading,
+}: VehiclesComponentProps): JSX.Element => {
   const api = createVehiclesApi(VEHICLES_API);
 
   const [vehicles, setVehicles] = useState<VehicleDto[]>(null);

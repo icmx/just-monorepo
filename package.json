@@ -13,14 +13,22 @@
     "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
     "watch:server": "npm run watch --prefix packages/server",
     "watch:client": "npm run watch --prefix packages/client",
-    "start:server": "npm run start --prefix packages/server"
+    "start:server": "npm run start --prefix packages/server",
+    "lint:client": "npm run lint --prefix packages/client",
+    "lint:server": "npm run lint --prefix packages/server",
+    "lint:types": "npm run lint --prefix packages/types",
+    "lint:utils": "npm run lint --prefix packages/utils",
+    "lint": "npm run lint:client && npm run lint:server && npm run lint:types && npm run lint:utils"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.3.0",
+    "eslint": "^7.32.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.3.0",

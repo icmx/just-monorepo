@@ -1,4 +1,4 @@
-# Just Monorepo
+# 🛠️ Just Monorepo
 
 Bare minimum boilerplate featuring Webpack, Babel, basic EJS templating and PostCSS styling, all live-reloadable. Code linting and formatting are provided by ESLint and Prettier.
 

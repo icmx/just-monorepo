@@ -4,7 +4,10 @@ import { times } from '@just-monorepo/utils';
 
 import { mockVehicles } from './utilities';
 
-export const findAllVehicles = async (request: Request, response: Response) => {
+export const findAllVehicles = async (
+  request: Request,
+  response: Response
+): Promise<void> => {
   console.log(`Trying to get all available vehicles.`);
 
   await times.delay(1000);

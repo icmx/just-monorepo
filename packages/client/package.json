@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build": "webpack --config-name build",
-    "watch": "webpack serve --config-name watch"
+    "watch": "webpack serve --config-name watch",
+    "lint": "eslint src"
   },
   "files": [
     "dist"

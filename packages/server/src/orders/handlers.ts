@@ -3,7 +3,10 @@ import { Request, Response } from 'express';
 import { OrderDto } from '@just-monorepo/types';
 import { times, validate } from '@just-monorepo/utils';
 
-export const createOrder = async (request: Request, response: Response) => {
+export const createOrder = async (
+  request: Request,
+  response: Response
+): Promise<void> => {
   const order: OrderDto = request.body;
 
   console.log(`Trying to create an order: ${JSON.stringify(order)}`);

@@ -13,7 +13,8 @@
     "directory": "packages/types"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint src"
   },
   "files": [
     "dist"

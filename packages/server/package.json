@@ -15,7 +15,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "node-dev --notify=false src/index.ts",
-    "start": "node ."
+    "start": "node .",
+    "lint": "eslint src"
   },
   "files": [
     "dist"

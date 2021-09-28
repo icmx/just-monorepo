@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PersonComponentProps } from './types';
 
-export const Person = ({ onChange }: PersonComponentProps) => {
+export const Person = ({ onChange }: PersonComponentProps): JSX.Element => {
   return (
     <section className="card flex is-column">
       <div className="field">
