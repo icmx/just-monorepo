@@ -4,5 +4,5 @@
  * @param min
  * @param max
  */
-export const float = (min: number, max: number) =>
+export const float = (min: number, max: number): number =>
   Math.random() * (max - min) + min;

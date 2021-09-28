@@ -11,5 +11,8 @@ import { float } from './float';
  * fixed(1, 5, 2); // -> 2.04
  * fixed(1, 5, 2); // -> 3
  */
-export const fixed = (min: number, max: number, fractionDigits?: number) =>
-  parseFloat(float(min, max).toFixed(fractionDigits));
+export const fixed = (
+  min: number,
+  max: number,
+  fractionDigits: number
+): number => parseFloat(float(min, max).toFixed(fractionDigits));

@@ -11,5 +11,7 @@ import { isFullString } from './is-full-string';
  *   - Has a `contacts` property which is valid non-empty string
  * @param order
  */
-export const isValidOrder = ({ vehicleId, fullName, contacts }: OrderDto) =>
-  isInteger(vehicleId) && isFullString(fullName) && isFullString(contacts);
+export const isValidOrder = (order: OrderDto): boolean =>
+  isInteger(order.vehicleId) &&
+  isFullString(order.fullName) &&
+  isFullString(order.contacts);
