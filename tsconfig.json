@@ -15,5 +15,11 @@
   },
   "paths": {
     "*": ["node_modules/*"]
+  },
+
+  // Related to ts-node issue (emit skipped).
+  // https://github.com/TypeStrong/ts-node/issues/693
+  "ts-node": {
+    "transpileOnly": true
   }
 }

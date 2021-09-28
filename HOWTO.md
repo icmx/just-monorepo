@@ -1,10 +1,10 @@
 # How To
 
-> *This document describes how to create such monorepository by using just NPM workspaces feature.*
+> *This document describes how to create this monorepository by using just NPM workspaces feature.*
 
-Few notes before we start:
+Few notes before start:
 
-  - Created monorepository will rely on Node.js' JavaScript and Typescript, so it won't work for other languages and infrastructures obvoiusly
+  - Created monorepository will rely on Node.js' JavaScript and Typescript; these techniques won't work for other languages and infrastructures obvoiusly
   - Created monorepository will require NPM v7 or higher since it's relies on NPM workspaces. If you haven't one, there are some options:
     - Install Node.js v15 or higher where NPM v7 or higher is icluded
     - Manually install NPM v7 or higher:
@@ -245,7 +245,7 @@ It can now build any package by running:
 npm run build:<package>
 ```
 
-For instance,
+For instance:
 
 ```sh
 npm run build:types
@@ -257,11 +257,184 @@ Or build all of them at once:
 npm run build
 ```
 
-## Step 3. Populating Sub-Packages
+## Step 3. Integrating Server Dependencies (Express and Others)
 
-### Types Sub-Package
+For server sub-packages (like `@just-monorepo/server`) there should be some server infrastructure, simple Express with integrated TypeScript support for instance.
 
-**`@just-monorepo/types`** is types and data contracts defenetions sub-package. This sub-package will defenitely be consumed by others sub-packages, so it should be populated first.
+Server dependencies (Express) are potentially may be utilized by multiple server sub-packages so install them in root package:
+
+```sh
+npm install cors express
+```
+
+Then development packages:
+
+```sh
+npm install --save-dev @types/cors @types/express node-dev ts-node
+```
+
+One note for server sub-packages configuration: to use local sub-package dependencies (like `@just-monorepo/server` which depends on `@just-monorepo/utils`) use this in root `tsconfig.json`:
+
+```diff
+@@ -15,5 +15,8 @@
+    },
+    "paths": {
+      "*": ["node_modules/*"]
++   },
++   "ts-node": {
++     "transpileOnly": true
+    }
+  }
+```
+
+Next, setup watch and start scripts in `package.json` of `@just-monorepo/server`:
+
+```diff
+@@ -13,7 +13,9 @@
+      "directory": "packages/server"
+    },
+    "scripts": {
+-     "build": "tsc"
++     "build": "tsc",
++     "watch": "node-dev --notify=false src/index.ts",
++     "start": "node ."
+    },
+    "files": [
+      "dist"
+```
+
+And for root `package.json` too:
+
+```diff
+@@ -10,9 +10,19 @@
+      "build:server": "npm run build --prefix packages/server",
+      "build:types": "npm run build --prefix packages/types",
+      "build:utils": "npm run build --prefix packages/utils",
+-     "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils"
++     "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
++     "watch:server": "npm run watch --prefix packages/server",
++     "start:server": "npm run start --prefix packages/server"
+    },
+    "devDependencies": {
++     "@types/cors": "...",
++     "@types/express": "...",
++     "node-dev": "...",
++     "ts-node": "...",
+      "typescript": "..."
++   },
++   "dependencies": {
++     "cors": "...",
++     "express": "..."
+    }
+  }
+```
+
+Now it's done. A monorepository has global Express support for any server sub-package.
+
+Also, `@just-monorepo/server` is set up and ready. It can be built by `build` command:
+
+```sh
+npm run build:server
+```
+
+Then it can be launched by `start` command:
+
+```sh
+npm run start
+```
+
+While developing it can be started in non-production watch mode:
+
+```sh
+npm run watch:server
+```
+
+##  Integrating Client Dependencies (Webpack and Others)
+
+For client sub-packages (like `@just-monorepo/client`) there should be some client bundling infrastructure, Webpack bundling for instance.
+
+Client dependencies (Webpack and plugins) are ponentially may be utilized by multiple sub-packages so install them in root package. They are all goes as development dependencies since Webpack packages are need only while developing:
+
+```sh
+npm install --save-dev clean-webpack-plugin copy-webpack-plugin css-loader file-loader html-webpack-plugin mini-css-extract-plugin postcss-csso postcss-import postcss-loader ts-loader webpack webpack-cli webpack-dev-server webpack-merge
+```
+
+Next, setup watch and build scripts in `package.json` of `@just-monorepo/client`:
+
+```diff
+@@ -13,7 +13,8 @@
+      "directory": "packages/client"
+    },
+    "scripts": {
+-     "build": "tsc",
++     "build": "webpack --config-name build",
++     "watch": "webpack serve --config-name watch"
+    },
+    "files": [
+      "dist"
+```
+
+And for root `package.json` too:
+
+```diff
+@@ -12,14 +12,29 @@
+      "build:utils": "npm run build --prefix packages/utils",
+      "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+      "watch:server": "npm run watch --prefix packages/server",
++     "watch:client": "npm run watch --prefix packages/client",
+      "start:server": "npm run start --prefix packages/server"
+    },
+    "devDependencies": {
+      "@types/cors": "...",
+      "@types/express": "...",
++     "clean-webpack-plugin": "...",
++     "copy-webpack-plugin": "...",
++     "css-loader": "...",
++     "file-loader": "...",
++     "html-webpack-plugin": "...",
++     "mini-css-extract-plugin": "...",
+      "node-dev": "...",
++     "postcss-csso": "...",
++     "postcss-import": "...",
++     "postcss-loader": "...",
++     "ts-loader": "...",
+      "ts-node": "...",
+-     "typescript": "..."
++     "typescript": "...",
++     "webpack": "...",
++     "webpack-cli": "...",
++     "webpack-dev-server": "...",
++     "webpack-merge": "..."
+    },
+    "dependencies": {
+      "cors": "^2.8.5",
+```
+
+Setup Webpack next. Like e.g. TypeScript its configuration should be split into base and local ones with specific paths (for sub-package). They are available here:
+
+  - [`/webpack.config.js`](webpack.config.js) — base Webpack configuration
+  - [`/packages/client/webpack.config.js`](packages/client/webpack.config.js) — local (per package) Webpack configuration
+  - *Note:* if there will be another client package it should have its own `webpack.config.js`
+
+Now it's done. A monorepository has global Webpack support for any client sub-package.
+
+Also, `@just-monorepo/client` is set up and ready. It can be built by `build` command:
+
+```sh
+npm run build:client
+```
+
+While developing it can be started in non-production watch mode:
+
+```sh
+npm run watch:client
+```
+
+## Step 3. Populating Sub-Packages and Utilizing Local Dependencies
+
+### Populating Types Sub-Package
+
+**`@just-monorepo/types`** is types and data contracts defenetions sub-package. It will defenitely be consumed by others sub-packages, so it should be populated first.
 
 Create some data contract definition that will be used later. In `src/vehicles/vehicle.dto.ts`:
 
@@ -281,11 +454,13 @@ Now types sub-package is done. Build it by using command from root directory:
 npm run build:types
 ```
 
-### Utilities Package
+### Populating Utilities Package
 
-**`@just-monorepo/utils`** is generic utility functions sub-package which will be used both used by client and server applications. Among others this sub-package provides validation utilities for `OrderDto` structure validation.
+**`@just-monorepo/utils`** is generic utility functions sub-package which will be used both by client and server applications. Among others this sub-package provides validation utilities for `OrderDto` structure validation.
 
-Since `OrderDto` interface is defined and exported in `@just-monorepo/types` sub-package it should be integrated into `@just-monorepo/utils` as a development dependency. Types sub-package is never published so it can be added only manually by editing `package.json` of `@just-monorepo/utils`:
+Since `OrderDto` interface is defined and exported in `@just-monorepo/types` sub-package it should be integrated into `@just-monorepo/utils` as a development dependency first.
+
+Types sub-package is never published so it can be added only manually by editing `package.json` of `@just-monorepo/utils`:
 
 ```diff
 @@ -19,5 +19,8 @@
@@ -314,14 +489,16 @@ import { OrderDto } from '@just-monorepo/types'; // ← Here
 import { isNumber } from './is-number';
 import { isFullString } from './is-full-string';
 
-export const isValidOrder = ({ vehicleId, fullName, contacts }: OrderDto) =>
-  isNumber(vehicleId) && isFullString(fullName) && isFullString(contacts);
+export const isValidOrder = (order: OrderDto): boolean =>
+  isInteger(order.vehicleId) &&
+  isFullString(order.fullName) &&
+  isFullString(order.contacts);
 ```
 
 Note some caveats:
 
   - Every time when `@just-monorepo/types` code is changed it should be re-built to be available in other sub-packages. Same does for every dependency sub-package.
-  - For Visual Studio Code: use `Developer: Reload Window` comman if local sub-packages dependency is not recognized (i.e. in TypeScript `import`s)
+  - For Visual Studio Code: use `Developer: Reload Window` command if local sub-packages dependency is not recognized (i.e. in TypeScript `import`s)
 
 Now utilities sub-package is done. Build it by using command from root directory:
 
@@ -329,83 +506,26 @@ Now utilities sub-package is done. Build it by using command from root directory
 npm run build:utils
 ```
 
-### Server Sub-Package
+### Populating Server Sub-Package
 
-**`@just-monorepo/server`** is server package. It will act like example of API server for client front-end applications.
+**`@just-monorepo/server`** is a server package. It will act like example of API server for client front-end applications.
 
-To prepare server first install `express` and `cors` packages:
-
-```sh
-npm install --workspace=packages/server cors express
-```
-
-Then install development packages too:
-
-```sh
-npm install --workspace=packages/server --save-dev node-dev ts-node @types/cors @types/express
-```
-
-Setup watch and serve scripts in `package.json` of `@just-monorepo/server` package:
+Add local types and utilities sub-packages as dependencies, like in section before:
 
 ```diff
-@@ -13,11 +13,25 @@
-      "directory": "packages/server"
-    },
-    "scripts": {
--     "build": "tsc"
-+     "build": "tsc",
-+     "watch": "node-dev --notify=false src/index.ts",
-+     "start": "node ."
-    },
-    "files": [
+@@ -21,5 +21,11 @@
       "dist"
     ],
     "types": "dist/index.d.ts",
 -   "main": "dist/index.js"
 +   "main": "dist/index.js",
 +   "dependencies": {
-+     "cors":  "...",
-+     "express":  "..."
++     "@just-monorepo/utils": "0.0.0"
 +   },
 +   "devDependencies": {
-+     "@types/cors":  "...",
-+     "@types/express":  "...",
-+     "node-dev":  "...",
-+     "ts-node":  "..."
++     "@just-monorepo/types": "0.0.0"
 +   }
   }
-```
-
-And for root `package.json` too:
-
-```diff
-@@ -11,6 +11,8 @@
-      "build:types": "npm run build --prefix packages/types",
-      "build:utils": "npm run build --prefix packages/utils",
-      "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
-+     "watch:server": "npm run watch --prefix packages/server",
-+     "start:server": "npm run start --prefix packages/server"
-    },
-    "devDependencies": {
-      "typescript": "..."
-```
-
-Now add local types and utilities sub-packages as dependencies, like in section before:
-
-```diff
-@@ -23,10 +23,12 @@
-    "types": "dist/index.d.ts",
-    "main": "dist/index.js",
-    "dependencies": {
-+     "@just-monorepo/utils": "0.0.0",
-      "cors": "...",
-      "express":  "..."
-    },
-    "devDependencies": {
-+     "@just-monorepo/types": "0.0.0",
-      "@types/cors":  "...",
-      "@types/express":  "...",
-      "node-dev":  "...",
 ```
 
 Then link them by running `install` from root directory:
@@ -422,61 +542,30 @@ import { Request, Response } from 'express';
 import { OrderDto } from '@just-monorepo/types'; // ← Here
 import { times, validate } from '@just-monorepo/utils'; // ← And here
 
-export const createOrder = async (request: Request, response: Response) => {
-  const order: OrderDto = request.body;
+export const isValidOrder = (order: OrderDto): boolean =>
+  isInteger(order.vehicleId) &&
+  isFullString(order.fullName) &&
+  isFullString(order.contacts);
 ```
 
-One small ts-node caveat: to use sub-package dependencies enable this setting in local `tsconfig.json`:
+Now `@just-monorepo/server` is populated.
 
-```diff
-@@ -6,4 +6,7 @@
-      "outDir": "dist"
-    },
-    "files": ["src/index.ts"],
-+   "ts-node": {
-+     "transpileOnly": true
-+   }
-  }
-```
+### Populating Client Sub-Package
 
-Now server is set up and ready. It can be built by `build` command:
+**`@just-monorepo/client`** is a client package. It's an example of front-end application for end users and will be built with React and Webpack.
+
+Webpack was installed and set up as global dependencies already since it's potentially may be used by multiple frontend applications. Unlike Webpack, assume that React will be used only in `@just-monorepo/client` (another client packages may be built with Angular, Vue.js or some other technologies).
+
+First install React packages:
 
 ```sh
-npm run build:server
+npm install --workspace=packages/client react react-dom
 ```
 
-Then it can be launched by `start` command:
+Then install development dependencies:
 
 ```sh
-npm run start
-```
-
-While developing it can be started in non-production watch mode:
-
-```sh
-npm run watch:server
-```
-
-### Client Sub-Package
-
-**`@just-monorepo/client`** is client package. It's an example of front-end application for end users and will be built with React and Webpack.
-
-To preapare client first install React packages:
-
-```sh
-npm install react react-dom
-```
-
-Then install development dependencies. Types comes first:
-
-```sh
-npm install --save-dev @types/react @types/react-dom
-```
-
-Then Webpack along with its plugins and other extras:
-
-```sh
-npm install --save-dev clean-webpack-plugin copy-webpack-plugin css-loader file-loader html-webpack-plugin mini-css-extract-plugin postcss-csso postcss-import postcss-loader ts-loader webpack webpack-cli webpack-dev-server webpack-merge
+npm install --workspace=packages/client --save-dev @types/react @types/react-dom
 ```
 
 Like with server package, setup local dependencies manually by modifying client `package.json`:
@@ -493,8 +582,8 @@ Like with server package, setup local dependencies manually by modifying client 
     "devDependencies": {
 +     "@just-monorepo/types": "0.0.0",
       "@types/react": "...",
-      "@types/react-dom": "...",
-      "clean-webpack-plugin": "...",
+      "@types/react-dom": "..."
+    }
 ```
 
 And link them:
@@ -503,12 +592,7 @@ And link them:
 npm install
 ```
 
-Setup Webpack next. Like e.g. TypeScript its configuration should be splitten into base and local with specific paths (for sub-package). They are available here:
-
-  - Base Webpack configuration: [`/webpack.config.js`](webpack.config.js)
-  - Local Webpack configuration: [`/packages/client/webpack.config.js`](packages/client/webpack.config.js)
-
-Due to React typed JSX (TSX files) integration `tsconfig.json` should now have `jsx` option along with new TSX entry point (`"src/index.tsx"`):
+Due to React typed JSX (TSX files) integration local `tsconfig.json` should now have `jsx` option along with new TSX entry point (`"src/index.tsx"`):
 
 ```diff
 @@ -3,7 +3,8 @@
@@ -524,45 +608,7 @@ Due to React typed JSX (TSX files) integration `tsconfig.json` should now have `
   }
 ```
 
-Next setup build and watch scripts. First comes client's `package.json`:
-
-```diff
-@@ -13,7 +13,8 @@
-      "directory": "packages/client"
-    },
-    "scripts": {
--     "build": "tsc"
-+     "build": "webpack --config-name build",
-+     "watch": "webpack serve --config-name watch"
-    },
-    "files": [
-      "dist"
-```
-
-Then in global one:
-
-```diff
-@@ -12,6 +12,7 @@
-      "build:utils": "npm run build --prefix packages/utils",
-      "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
-      "watch:server": "npm run watch --prefix packages/server",
-+     "watch:client": "npm run watch --prefix packages/client",
-      "start:server": "npm run start --prefix packages/server"
-    },
-    "devDependencies": {
-```
-
-And client sub-package is set up and ready. It can be built by `build` command:
-
-```sh
-npm run build:client
-```
-
-While developing it can be started in non-production watch mode:
-
-```sh
-npm run watch:client
-```
+Now `@just-monorepo/client` is populated.
 
 ### Documentation (Optional)
 
@@ -577,8 +623,10 @@ Integrated documentation to TypeScript code can be easily added by using JSDoc s
  *   - Has a `contacts` property which is valid non-empty string
  * @param order
  */
-export const isValidOrder = ({ vehicleId, fullName, contacts }: OrderDto) =>
-  isInteger(vehicleId) && isFullString(fullName) && isFullString(contacts);
+export const isValidOrder = (order: OrderDto): boolean =>
+  isInteger(order.vehicleId) &&
+  isFullString(order.fullName) &&
+  isFullString(order.contacts);
 ```
 
-After `build` command this annotation will available in external packages, i.e. in `@just-monorepo/server` which utilizes `@just-monorepo/utils`.
+After `build` command this annotation will be available in external packages, i.e. in `@just-monorepo/server` which utilizes `@just-monorepo/utils`.
