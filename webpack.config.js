@@ -40,8 +40,8 @@ const createBaseConfig = (paths, meta) => ({
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        use: 'ts-loader',
         exclude: /node_modules/,
+        use: 'ts-loader',
       },
       {
         test: /\.css$/,

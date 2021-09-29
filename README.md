@@ -36,15 +36,15 @@ Install dependencies:
 npm install
 ```
 
-*Note:* this project is built on npm workspaces feature and thus requires npm v7 or higher. If you haven't one, there are some options:
+*Note:* this project is built on NPM workspaces feature and thus requires NPM v7 or higher. If you haven't one, there are some options:
 
   - Install Node.js v15 or higher where NPM v7 or higher is icluded
   - Manually install NPM v7 or higher:
     - Globally, by running `npm install --global npm@latest`
     - Locally for project, by running `npm install --save-dev npm@latest`
-  - **(the simplest but the slowest one)** run latest NPM directly by using npx: `npx npm@latest <npm-commands...>`
+  - **(the simplest but the slowest one)** run latest NPM directly by using NPX: `npx npm@latest <npm-commands...>`
 
-Build specific package:
+Build a specific package:
 
 ```sh
 npm run build:client
@@ -68,7 +68,7 @@ npm run watch:server
 
 *Note:* client application requires server application running. They can be started together just in separate terminal windows e.g.
 
-Lint specific package:
+Lint a specific package:
 
 ```sh
 npm run lint:client
@@ -83,6 +83,8 @@ Or all packages at once:
 npm run lint
 ```
 
+## Motivation
+
 There are lots of similar boilerplates already indeed. However, most of them are incredibly bloated by endless dependencies, which may be deprecated, outdated and not even used at all, thus I suppose there should be some really lightweight and easy to use alternative.
 
 Please note that packages choice for Just Monorepo not only bare, but also sane — this project is not about making it as small as possible.
@@ -94,4 +96,4 @@ Project structure is described in [HOWTO](HOWTO.md).
 ## See Also
 
   - [Just Gulp](https://github.com/icmx/just-gulp) — same project, but much smaller and for bundling frontend application by using gulp.
-  - [Just Webpack](https://github.com/icmx/just-webpack) — like Just Gulp, but for Webpack.
+  - [Just Webpack](https://github.com/icmx/just-webpack) — same, but for Webpack.
