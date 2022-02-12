@@ -58,6 +58,12 @@ npm run lint
 
 One can also lint specific package, e.g. `npm run lint:client`.
 
+## How it looks like?
+
+This project isn't about UI, but in case you need to see it, here it is:
+
+![Screenshot of project user interface](demo.png)
+
 ## Motivation
 
 There are lots of similar boilerplates already indeed. However, most of them are incredibly bloated by endless dependencies, which may be deprecated, outdated and not even used at all, thus I suppose there should be some really lightweight and easy to use alternative.
