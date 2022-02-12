@@ -14,7 +14,7 @@ const paths = {
   static: path.join(__dirname, pathsNames.src, pathsNames.static),
 };
 
-const watchConfig = createWatchConfig(paths, meta);
-const buildConfig = createBuildConfig(paths, meta);
+const watchConfig = createWatchConfig(paths, { meta, port: 3001 });
+const buildConfig = createBuildConfig(paths, { meta });
 
 module.exports = [watchConfig, buildConfig];

@@ -15,7 +15,7 @@ const pathsNames = {
   static: 'static',
 };
 
-const createBaseConfig = (paths, meta) => ({
+const createBaseConfig = (paths, { meta }) => ({
   entry: {
     app: `${paths.src}/index.tsx`,
   },
@@ -111,13 +111,13 @@ const createBaseConfig = (paths, meta) => ({
   ],
 });
 
-const createWatchConfig = (paths, meta) =>
-  merge(createBaseConfig(paths, meta), {
+const createWatchConfig = (paths, { meta, port }) =>
+  merge(createBaseConfig(paths, { meta }), {
     name: 'watch',
     mode: 'development',
     devtool: 'cheap-module-source-map',
     devServer: {
-      port: 8000,
+      port,
       liveReload: true,
       watchFiles: [`${paths.src}/**/*`],
       static: {
@@ -138,8 +138,8 @@ const createWatchConfig = (paths, meta) =>
     ],
   });
 
-const createBuildConfig = (paths, meta) =>
-  merge(createBaseConfig(paths, meta), {
+const createBuildConfig = (paths, { meta }) =>
+  merge(createBaseConfig(paths, { meta }), {
     name: 'build',
     mode: 'production',
     plugins: [],
