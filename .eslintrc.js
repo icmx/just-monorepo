@@ -5,7 +5,10 @@ module.exports = {
     node: true,
   },
   root: true,
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
@@ -13,5 +16,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   ignorePatterns: ['node_modules', 'dist'],
-  rules: {},
+  rules: {
+    '@typescript-eslint/no-var-requires': 'off',
+  },
 };
