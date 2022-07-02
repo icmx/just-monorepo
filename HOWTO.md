@@ -1,20 +1,20 @@
 # How To
 
-> *This document describes how to create this monorepository by using just NPM workspaces feature.*
+> *This document describes how to create a similar monorepository by using just a NPM workspaces feature.*
 
 ## Note for NPMv7
 
-This monorepository will require NPM >=7 since it's relies on workspaces feature. If you haven't one, there are some options:
+This monorepository will require NPM >=7 since it relies on workspaces feature. If you haven't one, there are some options:
 
-  - Install Node.js >=15 or higher, NPM >=7 is icluded
+  - Install Node.js >=15 or higher, NPM >=7 is included
   - Or manually install NPM >=7:
     - Globally, by running `npm install --global npm@latest`
-    - Or locally for project, by running `npm install --save-dev npm@latest`
+    - Or locally, by running `npm install --save-dev npm@latest`
     - **(the simplest but the slowest one)** run latest NPM directly by using npx: `npx npm@latest <npm-commands...>`
 
 ## Step 1. Initialization
 
-Create a new directory that will be the root for a new monorepository. In this article it's supposed that root directory name is `just-monorepo`.
+Create a new directory that will be a root for a new monorepository. In this article it's supposed that root directory is `just-monorepo`.
 
 Switch to created directory and initialize a new git repository then:
 
@@ -23,13 +23,13 @@ cd just-monorepo
 git init
 ```
 
-Initialize a new NPM package that will be the root package:
+Initialize a new NPM package that will be a root package:
 
 ```sh
 npm init --yes
 ```
 
-Enable workspaces in previously created package so it become root meta-package for real sub-packages. To do so, clean up created root `package.json` and make it looks like this:
+Enable workspaces in previously created package so it become a root meta-package for real sub-packages. To do so, clean up created root `package.json` and make it look like this:
 
 ```json
 {
@@ -42,9 +42,9 @@ Enable workspaces in previously created package so it become root meta-package f
 }
 ```
 
-Here `"workspaces"` property holds list of directories of actual sub-packages. [Details in NPM docs.](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+Here `"workspaces"` property holds list of directories of actual sub-packages. [See details in NPM docs.](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
 
-There is no "common" or "best" packages structure. Sometimes it's better to use flat structure of just `packages/*` directory while sometimes it can be splitted up to `apps/*`, `libs/*`, `<etc>/*` and so on structure. In order to provide simple example this monorepo will use flat option.
+There is no "common" or "best" packages structure. Sometimes it's better to use flat structure of just `packages/*` directory while sometimes it can be splitted up to `apps/*`, `libs/*`, `<etc>/*` and so on. In order to provide simple example this monorepo will use flat option.
 
 Create the following structure:
 
@@ -62,7 +62,7 @@ just-monorepo/  —  root package: just-monorepo
 └── package.json
 ```
 
-Each sub-package is just a sub-directory of `packages` directory with its own `package.json`:
+Each sub-package is just a subdirectory with its own `package.json`:
 
 ```json
 {
@@ -88,7 +88,7 @@ Where `<sub-package-name>` is one of `packages` subdirectories names, e.g:
 "name": "@just-monorepo/client"
 ```
 
-Now it's ready. A blank monorepository with 4 sub-packages is created.
+Now it's ready: blank monorepository with 4 sub-packages is created.
 
 ## Step 2. Integrating TypeScript
 
@@ -159,7 +159,7 @@ While sub-packages `tsconfig.json` files will extend the base and contain just p
 }
 ```
 
-Then `package.json` of each sub-package should now contain the following properties:
+Then `package.json` of each sub-package should now contain following properties:
 
   - build script (`"scripts.build"`)
   - path working files (`"files"`)
@@ -236,7 +236,7 @@ Also, root [`package.json`](package.json) should now have global building script
 +   }
 ```
 
-Now it's done: a monorepository supports TypeScript fro now.
+Now it's done: a monorepository supports TypeScript from now.
 
 It can now build any package by running:
 
@@ -250,7 +250,7 @@ For instance:
 npm run build:types
 ```
 
-Or build all of them at once:
+Or build them all at once:
 
 ```sh
 npm run build
@@ -328,7 +328,7 @@ And for root [`package.json`](package.json) too:
   }
 ```
 
-Now it's done. A monorepository has global Express support for any server sub-package.
+Now it's done: monorepository has global Express support for any server sub-package.
 
 Also, `@just-monorepo/server` is set up and ready. It can be built by `build` command:
 
@@ -409,7 +409,7 @@ And for root [`package.json`](package.json) too:
       "cors": "^2.8.5",
 ```
 
-Setup Webpack configuration next. Like e.g. TypeScript its configuration should be split into base and local ones with specific paths (for sub-package). They are available here:
+Setup Webpack configuration next. Like e.g. TypeScript its configuration should be split up to base and local ones with specific paths (for sub-package). They are available here:
 
   - [`/webpack.config.js`](webpack.config.js) — base Webpack configuration
   - [`/packages/client/webpack.config.js`](packages/client/webpack.config.js) — local (per package) Webpack configuration
@@ -423,7 +423,7 @@ Also, `@just-monorepo/client` is set up and ready. It can be built by `build` co
 npm run build:client
 ```
 
-While developing it can be started in non-production watch mode:
+While developing it can be started in non-production live-reload mode:
 
 ```sh
 npm run watch:client
@@ -497,7 +497,7 @@ export const isValidOrder = (order: OrderDto): boolean =>
 Note some caveats:
 
   - Every time when `@just-monorepo/types` code is changed it should be re-built to be available in other sub-packages. Same does for every dependency sub-package.
-  - For Visual Studio Code: use `Developer: Reload Window` command if local sub-packages dependency is not recognized (i.e. in TypeScript `import`s)
+  - For Visual Studio Code users: use `Developer: Reload Window` command if local sub-packages dependency is not recognized (i.e. in TypeScript `import`s)
 
 Now utilities sub-package is done. Build it by using command from root directory:
 
@@ -509,7 +509,7 @@ npm run build:utils
 
 **`@just-monorepo/server`** is a server package. It will act like example of API server for client front-end applications.
 
-Add local types and utilities sub-packages as dependencies, like in section before:
+Add local types and utilities sub-packages as dependencies, like in a section before:
 
 ```diff
 @@ -21,5 +21,11 @@

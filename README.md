@@ -39,7 +39,7 @@ Build packages:
 npm run build
 ```
 
-One can also build specific package, e.g. `npm run build:client`.
+One can also build a specific package, e.g. `npm run build:client`.
 
 Run live-reload for applications packages:
 
@@ -48,7 +48,7 @@ npm run watch:client
 npm run watch:server
 ```
 
-*Note:* client application requires server application running. They can be started together in separate terminals e.g.
+*Note:* client application requires server application running. They can be started together on separate terminals e.g.
 
 Lint packages:
 
