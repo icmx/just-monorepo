@@ -23,8 +23,8 @@
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "devDependencies": {
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5"
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10"
   },
   "dependencies": {
     "react": "^18.2.0",
