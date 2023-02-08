@@ -4,13 +4,14 @@
 
 ## Note for NPMv7
 
-This monorepository will require NPM >=7 since it relies on workspaces feature. If you haven't one, there are some options:
+This monorepository requires NPM >=7 since it relies on workspaces feature. If you haven't one, here are some options:
 
-  - Install Node.js >=15 or higher, NPM >=7 is included
-  - Or manually install NPM >=7:
+  - Install Node.js >=15 or higher where NPM >=7 is included
+  - Or install NPM v7 manually:
     - Globally, by running `npm install --global npm@latest`
     - Or locally, by running `npm install --save-dev npm@latest`
     - **(the simplest but the slowest one)** run latest NPM directly by using npx: `npx npm@latest <npm-commands...>`
+  - Or consider using [nvm](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) Node.js version managers
 
 ## Step 1. Initialization
 
@@ -469,7 +470,7 @@ Types sub-package is never published so it can be added only manually by editing
 -   "main": "dist/index.js"
 +   "main": "dist/index.js",
 +   "devDependencies": {
-+     "@just-monorepo/types": "0.0.0"
++     "@just-monorepo/types": "file:../types/dist"
 +   }
   }
 ```
@@ -519,10 +520,10 @@ Add local types and utilities sub-packages as dependencies, like in a section be
 -   "main": "dist/index.js"
 +   "main": "dist/index.js",
 +   "dependencies": {
-+     "@just-monorepo/utils": "0.0.0"
++     "@just-monorepo/utils": "file:../utils/dist"
 +   },
 +   "devDependencies": {
-+     "@just-monorepo/types": "0.0.0"
++     "@just-monorepo/types": "file:../types/dist"
 +   }
   }
 ```
