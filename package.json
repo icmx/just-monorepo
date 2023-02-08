@@ -10,7 +10,7 @@
     "build:server": "npm run build --prefix packages/server",
     "build:types": "npm run build --prefix packages/types",
     "build:utils": "npm run build --prefix packages/utils",
-    "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+    "build": "npm run build:types && npm run build:utils && npm run build:server && npm run build:client",
     "watch:server": "npm run watch --prefix packages/server",
     "watch:client": "npm run watch --prefix packages/client",
     "start:server": "npm run start --prefix packages/server",
