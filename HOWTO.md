@@ -230,12 +230,14 @@ Also, root [`package.json`](package.json) should now have global building script
 +     "build:server": "npm run build --prefix packages/server",
 +     "build:types": "npm run build --prefix packages/types",
 +     "build:utils": "npm run build --prefix packages/utils",
-+     "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils"
++     "build": "npm run build:types && npm run build:utils && npm run build:server && npm run build:client"
 +   },
 +   "devDependencies": {
 +     "typescript": "..."
 +   }
 ```
+
+Note a building order: `@just-monorepo/types` should be built first since all the packages needs it and so on.
 
 Now it's done: a monorepository supports TypeScript from now.
 
@@ -310,8 +312,8 @@ And for root [`package.json`](package.json) too:
       "build:server": "npm run build --prefix packages/server",
       "build:types": "npm run build --prefix packages/types",
       "build:utils": "npm run build --prefix packages/utils",
--     "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils"
-+     "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+-     "build": "npm run build:types && npm run build:utils && npm run build:server && npm run build:client"
++     "build": "npm run build:types && npm run build:utils && npm run build:server && npm run build:client",
 +     "watch:server": "npm run watch --prefix packages/server",
 +     "start:server": "npm run start --prefix packages/server"
     },
@@ -379,7 +381,7 @@ And for root [`package.json`](package.json) too:
 ```diff
 @@ -12,14 +12,29 @@
       "build:utils": "npm run build --prefix packages/utils",
-      "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+      "build": "npm run build:types && npm run build:utils && npm run build:server && npm run build:client",
       "watch:server": "npm run watch --prefix packages/server",
 +     "watch:client": "npm run watch --prefix packages/client",
       "start:server": "npm run start --prefix packages/server"
@@ -577,12 +579,12 @@ Like with server package, setup local dependencies manually by modifying client 
     "types": "dist/index.d.ts",
     "main": "dist/index.js",
     "dependencies": {
-+     "@just-monorepo/utils": "0.0.0",
++     "@just-monorepo/utils": "../utils/dist",
       "react": "...",
       "react-dom": "..."
     },
     "devDependencies": {
-+     "@just-monorepo/types": "0.0.0",
++     "@just-monorepo/types": "../types/dist",
       "@types/react": "...",
       "@types/react-dom": "..."
     }
@@ -683,7 +685,7 @@ It's just a `"lint": "eslint src"` in each package. For root [`package.json`](pa
 
 ```diff
 @@ -13,7 +13,12 @@
-      "build": "npm run build:client && npm run build:server && npm run build:types && npm run build:utils",
+      "build": "npm run build:types && npm run build:utils && npm run build:server && npm run build:client",
       "watch:server": "npm run watch --prefix packages/server",
       "watch:client": "npm run watch --prefix packages/client",
 -     "start:server": "npm run start --prefix packages/server"
