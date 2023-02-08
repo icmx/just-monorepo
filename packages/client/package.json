@@ -22,12 +22,14 @@
   ],
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
-  "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10"
-  },
   "dependencies": {
+    "@just-monorepo/utils": "file:../utils/dist",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@just-monorepo/types": "file:../types/dist",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10"
   }
 }

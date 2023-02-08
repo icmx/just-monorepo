@@ -22,6 +22,6 @@
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "devDependencies": {
-    "@just-monorepo/types": "0.0.0"
+    "@just-monorepo/types": "file:../types/dist"
   }
 }
