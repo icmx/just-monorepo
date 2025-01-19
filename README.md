@@ -1,6 +1,6 @@
 # 🛠️ Just Monorepo
 
-Minimal monorepo boilerplate featuring NPM Workspaces along with TypeScript and Webpack.
+Minimal monorepo boilerplate featuring NPM Workspaces along with webpack and TypeScript.
 
   - See [SPECS](SPECS.md) for project sample business processes
   - See [HOWTO](HOWTO.md) for guide to set up monorepo like this

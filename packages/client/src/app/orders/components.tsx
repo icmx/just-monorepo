@@ -1,11 +1,8 @@
-import React, { ChangeEvent, useState } from 'react';
-
+import React, { ChangeEvent, JSX, useState } from 'react';
 import { OrderDto } from '@just-monorepo/types';
 import { validate } from '@just-monorepo/utils';
-
 import { Person } from '../persons';
 import { Vehicles } from '../vehicles';
-
 import { createOrdersApi } from './api';
 import { ORDERS_API } from './constants';
 import {
@@ -13,10 +10,11 @@ import {
   PreviewComponentProps,
   ResultComponentProps,
 } from './types';
-
 import './styles.css';
 
-export const Loader = ({ isLoading }: LoaderComponentProps): JSX.Element => (
+export const Loader = ({
+  isLoading,
+}: LoaderComponentProps): JSX.Element => (
   <aside className={`loader ${isLoading ? 'is-shown' : ''}`}>
     <div className="loader-icon">⌛</div>
   </aside>
@@ -39,7 +37,9 @@ export const Result = ({
   result,
   onClose,
 }: ResultComponentProps): JSX.Element => (
-  <section className={`result card ${result === undefined ? '' : 'is-shown'}`}>
+  <section
+    className={`result card ${result === undefined ? '' : 'is-shown'}`}
+  >
     <h1>{result ? 'Great!' : 'Uh-oh...'}</h1>
     <p>
       {result

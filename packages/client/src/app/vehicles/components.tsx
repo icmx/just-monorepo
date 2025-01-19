@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { JSX, useEffect, useState } from 'react';
 import { OrderDto, VehicleDto } from '@just-monorepo/types';
-
 import { createVehiclesApi } from './api';
-import { VEHICLES_API, vehicleIcons, vehicleModelNames } from './constants';
+import {
+  VEHICLES_API,
+  vehicleIcons,
+  vehicleModelNames,
+} from './constants';
 import { VehicleComponentProps, VehiclesComponentProps } from './types';
 
 import './styles.css';
@@ -15,10 +17,14 @@ export const Vehicle = ({
 }: VehicleComponentProps): JSX.Element => (
   <button
     type="button"
-    className={`vehicle ${isSelected && 'is-selected'} card flex is-column`}
+    className={`vehicle ${
+      isSelected && 'is-selected'
+    } card flex is-column`}
     onClick={() => onChange({ vehicleId: vehicle.id })}
   >
-    <div className="vehicle-icon">{vehicleIcons.get(vehicle.model)}</div>
+    <div className="vehicle-icon">
+      {vehicleIcons.get(vehicle.model)}
+    </div>
     <div className="vehicle-data">
       {vehicleModelNames.get(vehicle.model)} from{' '}
       <strong>{vehicle.price}¤</strong>
@@ -34,7 +40,8 @@ export const Vehicles = ({
   const api = createVehiclesApi(VEHICLES_API);
 
   const [vehicles, setVehicles] = useState<VehicleDto[]>(null);
-  const [selectedVehicleId, setSelectedVehicleId] = useState<number>(null);
+  const [selectedVehicleId, setSelectedVehicleId] =
+    useState<number>(null);
 
   const findAllVehicles = () => {
     onLoading(true);

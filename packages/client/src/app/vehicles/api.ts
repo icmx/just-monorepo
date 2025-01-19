@@ -1,5 +1,4 @@
 import { VehicleDto } from '@just-monorepo/types';
-
 import { VehiclesApi } from './types';
 
 export const createVehiclesApi = (baseUrl: string): VehiclesApi => ({

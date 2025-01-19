@@ -1,5 +1,4 @@
 import { OrderDto } from '@just-monorepo/types';
-
 import { OrdersApi } from './types';
 
 export const createOrdersApi = (baseUrl: string): OrdersApi => ({

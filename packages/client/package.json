@@ -23,12 +23,12 @@
   "main": "dist/index.js",
   "dependencies": {
     "@just-monorepo/utils": "file:../utils/dist",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^19.0.0",
+    "rect": "^1.2.1"
   },
   "devDependencies": {
     "@just-monorepo/types": "file:../types/dist",
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10"
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3"
   }
 }

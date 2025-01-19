@@ -1,8 +1,9 @@
-import React from 'react';
-
+import React, { JSX } from 'react';
 import { PersonComponentProps } from './types';
 
-export const Person = ({ onChange }: PersonComponentProps): JSX.Element => {
+export const Person = ({
+  onChange,
+}: PersonComponentProps): JSX.Element => {
   return (
     <section className="card flex is-column">
       <div className="field">
