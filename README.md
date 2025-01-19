@@ -2,8 +2,8 @@
 
 Minimal monorepo boilerplate featuring NPM Workspaces along with webpack and TypeScript.
 
-  - See [SPECS](SPECS.md) for project sample business processes
-  - See [HOWTO](HOWTO.md) for guide to set up monorepo like this
+  - See [specs](./docs/specs.md) for project sample business processes
+  - See [how-to](./docs/howto.md) for guide to set up monorepo like this
 
 ## Features
 
@@ -30,8 +30,6 @@ Install dependencies:
 ```sh
 npm install
 ```
-
-*Note:* this project requires NPM v7 or higher. If you haven't one, there are some [options](HOWTO.md#note-for-npmv7).
 
 Build packages:
 
@@ -62,7 +60,7 @@ One can also lint specific package, e.g. `npm run lint:client`.
 
 This project isn't about UI, but in case you need to see it, here it is:
 
-![Screenshot of project user interface](demo.png)
+![Screenshot of project user interface](./docs/demo.png)
 
 ## Motivation
 
@@ -72,7 +70,7 @@ Please note that packages choice for Just Monorepo not only bare, but also sane 
 
 ## Structure
 
-Project structure is described in [HOWTO](HOWTO.md).
+Project structure is described in [how-to](./docs/howto.md).
 
 ## See Also
 
