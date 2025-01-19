@@ -2,20 +2,13 @@
 
 > *This document describes how to create a similar monorepository by using just a NPM workspaces feature.*
 
-## Note for NPMv7
-
-This monorepository requires NPM >=7 since it relies on workspaces feature. If you haven't one, here are some options:
-
-  - Install Node.js >=15 or higher where NPM >=7 is included
-  - Or install NPM v7 manually:
-    - Globally, by running `npm install --global npm@latest`
-    - Or locally, by running `npm install --save-dev npm@latest`
-    - **(the simplest but the slowest one)** run latest NPM directly by using npx: `npx npm@latest <npm-commands...>`
-  - Or consider using [nvm](https://github.com/nvm-sh/nvm) or [nvm-windows](https://github.com/coreybutler/nvm-windows) Node.js version managers
-
 ## Step 1. Initialization
 
 Create a new directory that will be a root for a new monorepository. In this article it's supposed that root directory is `just-monorepo`.
+
+```sh
+mkdir just-monorepo
+```
 
 Switch to created directory and initialize a new git repository then:
 
@@ -43,9 +36,9 @@ Enable workspaces in previously created package so it become a root meta-package
 }
 ```
 
-Here `"workspaces"` property holds list of directories of actual sub-packages. [See details in NPM docs.](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
+Here `"workspaces"` property lists directories of actual sub-packages. [See details in NPM docs.](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
 
-There is no "common" or "best" packages structure. Sometimes it's better to use flat structure of just `packages/*` directory while sometimes it can be splitted up to `apps/*`, `libs/*`, `<etc>/*` and so on. In order to provide simple example this monorepo will use flat option.
+There is no "common" or "best" packages structure. Sometimes it's better to use flat structure of just `packages/*` directory while sometimes it can be split up to `apps/*`, `libs/*`, `<etc>/*` and so on. In order to provide simple example this monorepo will use flat option.
 
 Create the following structure:
 
@@ -89,7 +82,7 @@ Where `<sub-package-name>` is one of `packages` subdirectories names, e.g:
 "name": "@just-monorepo/client"
 ```
 
-Now it's ready: blank monorepository with 4 sub-packages is created.
+Now it's ready: blank monorepo with 4 sub-packages is created.
 
 ## Step 2. Integrating TypeScript
 
@@ -239,9 +232,9 @@ Also, root [`package.json`](package.json) should now have global building script
 
 Note a building order: `@just-monorepo/types` should be built first since all the packages needs it and so on.
 
-Now it's done: a monorepository supports TypeScript from now.
+Now it's done: monorepository supports TypeScript.
 
-It can now build any package by running:
+One can now build any package by running:
 
 ```sh
 npm run build:<package>
@@ -351,11 +344,11 @@ While developing it can be started in non-production live-reload mode:
 npm run watch:server
 ```
 
-##  Integrating Client Dependencies (Webpack and Others)
+## Step 4. Integrating Client Dependencies (Webpack and Others)
 
 For client sub-packages (like `@just-monorepo/client`) there should be some client bundling infrastructure, like Webpack bundling for instance.
 
-Client dependencies (Webpack and plugins) are ponentially may be utilized by multiple sub-packages so install them in root package. They are all goes as development dependencies:
+Client dependencies (Webpack and plugins) are potentially may be utilized by multiple sub-packages so install them in root package. They are all goes as development dependencies:
 
 ```sh
 npm install --save-dev clean-webpack-plugin copy-webpack-plugin css-loader file-loader html-webpack-plugin mini-css-extract-plugin postcss-csso postcss-import postcss-loader ts-loader webpack webpack-cli webpack-dev-server webpack-merge
@@ -432,11 +425,11 @@ While developing it can be started in non-production live-reload mode:
 npm run watch:client
 ```
 
-## Step 3. Populating Sub-Packages and Utilizing Local Dependencies
+## Step 5. Populating Sub-Packages and Utilizing Local Dependencies
 
 ### Populating Types Sub-Package
 
-**`@just-monorepo/types`** is types and data contracts defenetions sub-package. It will defenitely be consumed by others sub-packages, so it should be populated first.
+**`@just-monorepo/types`** is types and data contracts definitions sub-package. It will be consumed by other sub-packages, so it should be populated first.
 
 Create some data contract definition that will be used later. In [`vehicles/vehicle.dto.ts`](packages/types/src/vehicles/vehicle.dto.ts):
 
@@ -483,7 +476,7 @@ Now link it by running `install` from root directory:
 npm install
 ```
 
-After `install` ends `OrderDto` can be imported in `@just-monorepo/utils` code, e.g. in [`validate/is-valid.order.ts`](packages/utils/src/validate/is-valid-order.ts):
+After `install` ends `OrderDto` can be imported in `@just-monorepo/utils` code, e.g. in [`validate/is-valid-order.ts`](packages/utils/src/validate/is-valid-order.ts):
 
 ```ts
 import { OrderDto } from '@just-monorepo/types'; // ← Here
