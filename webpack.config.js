@@ -1,8 +1,6 @@
 const path = require('path');
-
-const webpack = require('webpack');
+const { SourceMapDevToolPlugin } = require('webpack');
 const { merge } = require('webpack-merge');
-
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -15,7 +13,7 @@ const pathsNames = {
   static: 'static',
 };
 
-const createBaseConfig = (paths, { meta }) => ({
+const createBaseConfig = (paths) => ({
   entry: {
     app: `${paths.src}/index.tsx`,
   },
@@ -103,16 +101,12 @@ const createBaseConfig = (paths, { meta }) => ({
     new HtmlWebpackPlugin({
       template: `${paths.src}/index.html`,
       filename: `index.html`,
-      templateParameters: {
-        version: meta.version,
-        license: meta.license,
-      },
     }),
   ],
 });
 
-const createWatchConfig = (paths, { meta, port }) =>
-  merge(createBaseConfig(paths, { meta }), {
+const createWatchConfig = (paths, { port }) =>
+  merge(createBaseConfig(paths), {
     name: 'watch',
     mode: 'development',
     devtool: 'cheap-module-source-map',
@@ -132,14 +126,14 @@ const createWatchConfig = (paths, { meta, port }) =>
       },
     },
     plugins: [
-      new webpack.SourceMapDevToolPlugin({
+      new SourceMapDevToolPlugin({
         filename: '[file].map',
       }),
     ],
   });
 
-const createBuildConfig = (paths, { meta }) =>
-  merge(createBaseConfig(paths, { meta }), {
+const createBuildConfig = (paths) =>
+  merge(createBaseConfig(paths), {
     name: 'build',
     mode: 'production',
     plugins: [],

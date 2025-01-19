@@ -1,6 +1,4 @@
 const path = require('path');
-const meta = require('./package.json');
-
 const {
   createWatchConfig,
   createBuildConfig,
@@ -14,7 +12,7 @@ const paths = {
   static: path.join(__dirname, pathsNames.src, pathsNames.static),
 };
 
-const watchConfig = createWatchConfig(paths, { meta, port: 3001 });
-const buildConfig = createBuildConfig(paths, { meta });
+const watchConfig = createWatchConfig(paths, { port: 3001 });
+const buildConfig = createBuildConfig(paths);
 
 module.exports = [watchConfig, buildConfig];
