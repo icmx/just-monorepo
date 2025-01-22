@@ -1,5 +1,9 @@
 # 🛠️ Just Monorepo
 
+> Outdated
+>
+> This project uses outdated technologies and is not recommended for use in modern development.
+
 Minimal monorepo boilerplate featuring NPM Workspaces along with webpack and TypeScript.
 
   - See [specs](./docs/specs.md) for project sample business processes
@@ -47,14 +51,6 @@ npm run watch:server
 ```
 
 *Note:* client application requires server application running. They can be started together on separate terminals e.g.
-
-Lint packages:
-
-```sh
-npm run lint
-```
-
-One can also lint specific package, e.g. `npm run lint:client`.
 
 ## How it looks like?
 
